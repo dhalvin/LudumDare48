@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 196.056, 2533.94 )
+
+[sub_resource type="OpenSimplexNoise" id=2]
+
+[sub_resource type="NoiseTexture" id=3]
+width = 2048
+height = 8192
+noise = SubResource( 2 )
+
+[node name="CliffFace" type="StaticBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 0.194, 1 )
+texture = SubResource( 3 )
+
+[node name="Position2D" type="Position2D" parent="."]
+position = Vector2( -167.809, -2434.7 )
