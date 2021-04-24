@@ -61,7 +61,7 @@ func fall():
 	gravity = 1000
 	terminal_velocity = 500
 	self.collision_layer = 0
-	$RappelLine.points[1] = self.position + Vector2(30, -50)
+	$RappelLine.points[1] = $RappelLine.points[1].normalized() * 200
 	_on_cliff = false
 	is_anchored = false
 	

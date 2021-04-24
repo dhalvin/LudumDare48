@@ -1,0 +1,19 @@
+[gd_scene format=2]
+
+[node name="HUD" type="GridContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+columns = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AltitudeLabel" type="Label" parent="."]
+margin_right = 59.0
+margin_bottom = 14.0
+text = "Altitude: "
+
+[node name="AltitudeValue" type="Label" parent="."]
+margin_left = 63.0
+margin_right = 63.0
+margin_bottom = 14.0
