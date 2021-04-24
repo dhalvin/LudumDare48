@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://CliffFace.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://HUD.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Main.gd" type="Script" id=3]
 
 [node name="Main" type="Node"]
@@ -10,11 +10,15 @@ script = ExtResource( 3 )
 [node name="CliffFace" parent="." instance=ExtResource( 1 )]
 position = Vector2( 894.564, 2427.16 )
 
-[node name="Player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 658.61, 23.1063 )
-
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 
+[node name="HUD" parent="Camera2D" instance=ExtResource( 2 )]
+
+[node name="PlayerStart" type="Position2D" parent="."]
+position = Vector2( 607.855, 26.4285 )
+
+[node name="GameoverTimer" type="Timer" parent="."]
+wait_time = 3.0
+
 [editable path="CliffFace"]
-[editable path="Player"]

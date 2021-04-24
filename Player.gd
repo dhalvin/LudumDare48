@@ -1,5 +1,6 @@
 extends KinematicBody2D
 
+signal fell
 
 # Declare member variables here. Examples:
 export var max_jump_force = 700
@@ -12,24 +13,25 @@ var current_anchor = null
 
 export var velocity = Vector2()
 var _on_cliff = false
-
+var is_anchored = false
 var jump_progress = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
-
+	$Area2D.add_child($CollisionShape2D.duplicate())
+	$Area2D.connect("body_entered", self, "_on_body_entered")
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if Input.is_action_pressed("ui_jump") and _on_cliff:
 		jump_progress = clamp(jump_progress + charge_speed * delta, 0, 100)
-		$TextureProgress.value = jump_progress
+		$JumpBar.value = jump_progress
 
 	if Input.is_action_just_released("ui_jump") and _on_cliff and jump_progress > 0:
 		velocity.x -= jump_progress/100.0 * max_jump_force
 		jump_progress = 0
-		$TextureProgress.value = jump_progress
+		$JumpBar.value = jump_progress
 		_on_cliff = false
 
 	if not _on_cliff:
@@ -38,15 +40,32 @@ func _process(delta):
 	velocity.y = min(velocity.y, terminal_velocity)
 	
 	var collision = self.move_and_collide(velocity * delta)
-	if collision:
+	if collision and collision.get_collider().is_in_group("cliff"):
 		_on_cliff = true
 		velocity = Vector2()
 		
 	update_rappel()
 	
 func attach_to_anchor(anchor_pos):
+	is_anchored = true
 	current_anchor = anchor_pos
 	update_rappel()
 	
 func update_rappel():
-	$RappelLine.points[1] = current_anchor - self.position
+	if is_anchored:
+		$RappelLine.points[1] = current_anchor - self.position
+
+func fall():
+	velocity.x = 0
+	gravitx = -10
+	gravity = 1000
+	terminal_velocity = 500
+	self.collision_layer = 0
+	$RappelLine.points[1] = self.position + Vector2(30, -50)
+	_on_cliff = false
+	is_anchored = false
+	
+func _on_body_entered(body):
+	if body.is_in_group("obstacles") or body.is_in_group("enemies"):
+		fall() 
+		emit_signal("fell")

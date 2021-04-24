@@ -1,4 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Obstacle.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Enemy.tscn" type="PackedScene" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 196.056, 2533.94 )
@@ -10,7 +13,16 @@ width = 2048
 height = 8192
 noise = SubResource( 2 )
 
-[node name="CliffFace" type="StaticBody2D"]
+[sub_resource type="Curve2D" id=4]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, -524.919, -1994.83, 0, 0, 0, 0, -210.964, -1996.24 )
+}
+
+[node name="CliffFace" type="StaticBody2D" groups=[
+"cliff",
+]]
+collision_layer = 2
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
@@ -21,3 +33,12 @@ texture = SubResource( 3 )
 
 [node name="Position2D" type="Position2D" parent="."]
 position = Vector2( -167.809, -2434.7 )
+
+[node name="Obstacle" parent="." instance=ExtResource( 1 )]
+position = Vector2( -209.399, -2176.59 )
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource( 4 )
+
+[node name="Enemy" parent="." instance=ExtResource( 2 )]
+path_to_path_node = NodePath("../Path2D")
