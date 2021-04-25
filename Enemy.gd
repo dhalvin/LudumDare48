@@ -5,6 +5,7 @@ extends KinematicBody2D
 # var a = 2
 export (NodePath) var path_to_path_node = null
 var movement_path = null
+var path_node = null
 var pos_on_path = 0
 export var speed = 100
 
@@ -13,19 +14,22 @@ export var speed = 100
 func _ready():
 	if path_to_path_node:
 		set_path(get_node(path_to_path_node))
-		self.position = movement_path[0]
+		#self.position = movement_path[0]
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if not movement_path:
 		return
-	var next_point = movement_path[pos_on_path]
+	
+	var next_point = movement_path[pos_on_path] + self.path_node.position
+	
 	if self.position.distance_squared_to(next_point) < 1:
 		pos_on_path = wrapi(pos_on_path + 1, 0, movement_path.size())
-		next_point = movement_path[pos_on_path]
+		next_point = movement_path[pos_on_path] + self.path_node.position
 	var velocity = (next_point - self.position).normalized() * speed
 	move_and_slide(velocity)
 
 func set_path(path_node):
+	self.path_node = path_node
 	movement_path = path_node.curve.get_baked_points()

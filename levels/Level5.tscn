@@ -1,0 +1,65 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Obstacle.tscn" type="PackedScene" id=1]
+[ext_resource path="res://CliffSegment.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Enemy.tscn" type="PackedScene" id=3]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, -491.252, 460.189, 0, 0, 0, 0, -948.949, 460.578 )
+}
+
+[node name="CliffSegment" groups=[
+"medium",
+] instance=ExtResource( 2 )]
+difficulty = "medium"
+
+[node name="Obstacle" parent="." index="2" instance=ExtResource( 1 )]
+position = Vector2( -514.048, -716.111 )
+
+[node name="Obstacle2" parent="." index="3" instance=ExtResource( 1 )]
+position = Vector2( -513.69, -631.638 )
+
+[node name="Obstacle3" parent="." index="4" instance=ExtResource( 1 )]
+position = Vector2( -513.739, -291.595 )
+
+[node name="Obstacle4" parent="." index="5" instance=ExtResource( 1 )]
+position = Vector2( -513.739, -202.499 )
+
+[node name="Enemy" parent="." index="6" instance=ExtResource( 3 )]
+position = Vector2( -527.95, -464.323 )
+path_to_path_node = NodePath("../Path2D")
+
+[node name="Path2D" type="Path2D" parent="." index="7"]
+position = Vector2( -31.748, -924.189 )
+curve = SubResource( 1 )
+
+[node name="Enemy3" parent="." index="8" instance=ExtResource( 3 )]
+position = Vector2( -516.058, -33.83 )
+path_to_path_node = NodePath("../Path2D3")
+speed = 150
+
+[node name="Path2D3" type="Path2D" parent="." index="9"]
+position = Vector2( -19.856, -493.696 )
+curve = SubResource( 1 )
+
+[node name="Obstacle5" parent="." index="10" instance=ExtResource( 1 )]
+position = Vector2( -516.426, 130.604 )
+
+[node name="Obstacle6" parent="." index="11" instance=ExtResource( 1 )]
+position = Vector2( -516.069, 215.077 )
+
+[node name="Obstacle7" parent="." index="12" instance=ExtResource( 1 )]
+position = Vector2( -516.117, 555.121 )
+
+[node name="Obstacle8" parent="." index="13" instance=ExtResource( 1 )]
+position = Vector2( -516.117, 644.216 )
+
+[node name="Enemy2" parent="." index="14" instance=ExtResource( 3 )]
+position = Vector2( -530.329, 382.392 )
+path_to_path_node = NodePath("../Path2D2")
+speed = 200
+
+[node name="Path2D2" type="Path2D" parent="." index="15"]
+position = Vector2( -34.1265, -77.4732 )
+curve = SubResource( 1 )

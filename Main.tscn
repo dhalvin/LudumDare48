@@ -8,7 +8,7 @@
 script = ExtResource( 3 )
 
 [node name="CliffFace" parent="." instance=ExtResource( 1 )]
-position = Vector2( 894.564, 2427.16 )
+position = Vector2( 1200, 0 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
@@ -16,9 +16,7 @@ current = true
 [node name="HUD" parent="Camera2D" instance=ExtResource( 2 )]
 
 [node name="PlayerStart" type="Position2D" parent="."]
-position = Vector2( 607.855, 26.4285 )
+position = Vector2( 607.855, 100 )
 
 [node name="GameoverTimer" type="Timer" parent="."]
-wait_time = 3.0
-
-[editable path="CliffFace"]
+one_shot = true
