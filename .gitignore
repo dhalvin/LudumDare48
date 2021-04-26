@@ -9,3 +9,9 @@ lib/
 # Godot specified ignored files
 *.translation
 export_presets.cfg
+
+# Aseprite files
+sprite_files/
+
+# Font
+fonts/

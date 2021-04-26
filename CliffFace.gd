@@ -6,7 +6,7 @@ export var level_count = 4
 const SEGMENT_HEIGHT = 2048
 const CLIFF_WIDTH = 1024
 export var SEGMENTS_PER_SECTION = 5
-export var TOTAL_SECTIONS = 2
+export var TOTAL_SECTIONS = 4
 var theme_list = ["none", "none"]
 var segment_instances = {}
 var levels = {}
@@ -74,7 +74,8 @@ func create_segment(level_name, idx):
 	
 	segment.get_area().connect("body_entered", self, "_on_player_entered_segment", [idx])
 	
-	var sprite = $Sprite.duplicate()
+#	var sprite = $Sprite.duplicate()
+	var sprite = $Polygon2D.duplicate()
 	sprite.visible = true
 	segment._init_sprite(sprite)
 	return segment

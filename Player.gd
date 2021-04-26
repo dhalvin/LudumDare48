@@ -24,6 +24,10 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if Input.is_action_just_pressed("ui_jump") and _on_cliff:
+		$JumpBar.visible = true
+		$AnimationPlayer.play("charge_jump")
+		
 	if Input.is_action_pressed("ui_jump") and _on_cliff:
 		jump_progress = clamp(jump_progress + charge_speed * delta, 0, 100)
 		$JumpBar.value = jump_progress
@@ -32,7 +36,9 @@ func _process(delta):
 		velocity.x -= jump_progress/100.0 * max_jump_force
 		jump_progress = 0
 		$JumpBar.value = jump_progress
+		$JumpBar.visible = false
 		_on_cliff = false
+		$AnimationPlayer.play_backwards("charge_jump")
 
 	if not _on_cliff:
 		velocity += Vector2(gravitx, gravity) * delta
@@ -53,7 +59,7 @@ func attach_to_anchor(anchor_pos):
 	
 func update_rappel():
 	if is_anchored:
-		$RappelLine.points[1] = current_anchor - self.position
+		$Body/RappelLine.points[2] = current_anchor - self.position
 
 func fall():
 	velocity.x = 0
@@ -61,11 +67,18 @@ func fall():
 	gravity = 1000
 	terminal_velocity = 500
 	self.collision_layer = 0
-	$RappelLine.points[1] = $RappelLine.points[1].normalized() * 200
+	$Body/RappelLine.points[2] = $Body/RappelLine.points[2].normalized() * 200
 	_on_cliff = false
 	is_anchored = false
+	if $AnimationPlayer.current_animation != "falling" and $AnimationPlayer.current_animation != "falling_start":
+		$AnimationPlayer.play("falling_start")
+		$AnimationPlayer.queue("falling")
 	
 func _on_body_entered(body):
-	if body.is_in_group("obstacles") or body.is_in_group("enemies"):
+	if body.is_in_group("obstacles"):
+		body.activate()
+		fall() 
+		emit_signal("fell")
+	elif body.is_in_group("enemies"):
 		fall() 
 		emit_signal("fell")

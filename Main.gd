@@ -8,9 +8,10 @@ var player_falling = false
 
 const PIXELS_PER_METER = 64/1.7
 const CLIFF_OFFSET = Vector2(1200, 0)
-export var camera_offset = Vector2(350, 200)
+export var camera_offset = Vector2(300, 200)
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	#$Camera2D/HUD/CenterContainer/PopupDialog.popup()
 	randomize()
 	$Camera2D/HUD.set_position(-0.5*get_viewport().size)
 	$GameoverTimer.connect("timeout", self, "gameover")
@@ -21,7 +22,7 @@ func _ready():
 func _process(delta):
 	if not player_falling:
 		$Camera2D.position.y = $Player.position.y + camera_offset.y
-		$Camera2D/HUD/AltitudeValue.text = "-%.2f m" % [$Player.position.y/PIXELS_PER_METER]
+		$Camera2D/HUD/PanelContainer/Depth/Value.text = "%.2f m" % [$Player.position.y/PIXELS_PER_METER]
 
 func _on_player_fell():
 	player_falling = true
